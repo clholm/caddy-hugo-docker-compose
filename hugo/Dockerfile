@@ -36,12 +36,18 @@ RUN ln -s /usr/local/site/build.sh /usr/local/bin/build \
 
 # set permissions on volumes
 RUN addgroup -S worker-hugo && adduser -S worker-hugo -G worker-hugo
-RUN mkdir /site \
-    && chown -R worker-hugo:worker-hugo /site \
+RUN mkdir /home/worker-hugo/site \
+    && chown -R worker-hugo:worker-hugo /home/worker-hugo/site \
     && mkdir /home/worker-hugo/src \
     && chown -R worker-hugo:worker-hugo /home/worker-hugo/src
     # && mkdir /src \
     # && chown -R worker-hugo:worker-hugo /src
+
+# run move.sh in the background
+COPY ./move.sh /usr/local/site/move.sh
+RUN ln -s /usr/local/site/move.sh /usr/local/bin/move \
+    && chmod 755 /usr/local/bin/move
+RUN bash -c "move &" && sleep 2
 
 VOLUME /src
 VOLUME /site
