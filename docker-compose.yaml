@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  hugo:
+    # image: clholm/hugo:latest
+    build:
+      context: ./hugo
+      dockerfile: Dockerfile
+    volumes:
+      - $PWD/test-src/:/src
+      - $PWD/site/:/site
+    environment:
+      - HUGO_THEME=simple-a
+      - HUGO_BASEURL=localhost
+    restart: always
