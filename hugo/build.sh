@@ -11,3 +11,5 @@ echo "building!"
 # copy to directory with write permissions
 rsync -a /src /home/worker-hugo/
 $HUGO --source="/home/worker-hugo/src" --theme="$HUGO_THEME" --destination="/home/worker-hugo/site" --baseURL="$HUGO_BASEURL" "$@" || exit 1
+# call script to copy 
+sudo /usr/local/bin/copy
