@@ -1,8 +1,9 @@
 #!/bin/sh
+# script copies site files from working directory to volume
+# shared with host
 
-# entr command isn't working without this as a sciript, really annoying
 cp -r /home/worker-hugo/site/* /site
-# set permissions to host UID and GID
+# set permissions to UID and GID - set in Dockerfile or during build
 GID=$(cat /GID)
 UID=$(cat /UID)
 chown -R $UID:$GID /site
