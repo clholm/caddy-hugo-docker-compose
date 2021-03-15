@@ -29,18 +29,18 @@ RUN tar xzf ${HUGO_DONWLOAD_LOCATION} -C /usr/local/hugo/ \
 RUN apk update \
     && apk add --upgrade --no-cache ca-certificates libc6-compat libstdc++ git entr rsync sudo
 
-# copy run script and  set permissions
+# copy watch script and set permissions
 RUN mkdir /usr/local/site
 COPY ./watch.sh /usr/local/site/watch.sh
 RUN ln -s /usr/local/site/watch.sh /usr/local/bin/watch \
     && chmod 755 /usr/local/bin/watch
 
-# copy build script and  set permissions
+# copy build script and set permissions
 COPY ./build.sh /usr/local/site/build.sh
 RUN ln -s /usr/local/site/build.sh /usr/local/bin/build \
     && chmod 755 /usr/local/bin/build
 
-# copy copy (lol) script and  set permissions
+# copy copy (lol) script and set permissions
 COPY ./copy.sh /usr/local/site/copy.sh
 RUN ln -s /usr/local/site/copy.sh /usr/local/bin/copy \
     && chmod 755 /usr/local/bin/copy
@@ -55,7 +55,7 @@ RUN mkdir /home/worker-hugo/site \
     && chmod -R 775 /site
 
 # set UID and GID env variables
-RUN touch "/GID" && touch "UID"
+RUN touch "/GID" && touch "/UID"
 RUN echo "$GID" > "/GID" && echo "$UID" > "/UID"
 
 # allow worker-hugo to use sudo with copy command

@@ -1,7 +1,6 @@
 version: "3.8"
 services:
   hugo:
-    # image: clholm/hugo:latest
     build:
       context: ./hugo
       dockerfile: Dockerfile
@@ -9,6 +8,20 @@ services:
       - $PWD/test-src/:/src
       - $PWD/site/:/site
     environment:
-      - HUGO_THEME=simple-a
-      - HUGO_BASEURL=localhost
+      # change these variables to update the site's theme and/or baseURL
+      - HUGO_THEME=sk2
+      - HUGO_BASEURL=https://example.org
     restart: always
+  caddy:
+    build:
+      context: ./caddy
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - $PWD/caddy/caddyfile/:/etc/caddy/
+      - $PWD/site:/srv
+      - $PWD/caddy/caddy-data:/data
+      - $PWD/caddy/caddy-config:/config
+    restart: unless-stopped
